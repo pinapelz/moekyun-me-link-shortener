@@ -1,5 +1,4 @@
-# moekyun.me
-Webserver and Static Front-end for moekyun.me link shortener w/ support for custom shortlinks
-You can also deploy this yourself using either MySQL or PostgreSQL as a database backend.
+# moekyun.me (Vercel)
+A Vercel deployment of [moekyun.me](https://moekyun.me)
 
 *Inspired by https://catbox.moe*
