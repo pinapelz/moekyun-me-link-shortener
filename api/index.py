@@ -95,6 +95,10 @@ def create_database_connection():
         password = os.environ.get("POSTGRES_PASSWORD")
         port = int(os.environ.get("POSTGRES_PORT"))
         database = os.environ.get("POSTGRES_DATABASE")
+        SITE_URL = os.environ.get("SITE_URL")
+        MOE_IMAGE = os.environ.get("MOE_IMAGE")
+        MOE_QUOTE = os.environ.get("MOE_QUOTE")
+        
     else:
         parser = configparser.ConfigParser()
         parser.read("config.ini")
