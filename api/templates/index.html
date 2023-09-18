@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>moekyun link shortener</title>
+    <meta name="description" content="Make your links more moe moe kyun!">
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='index.css') }}">
+</head>
+<body style="background-image: url('{{graphic}}');">
+    <div class="container">
+        <img src="{{moe_image_url}}" alt="Moe" class="moe-image">
+        <h1>moekyun.me</h1>
+        <h2>{{moe_quote}}</h2>
+        <button type="button" id="custom-button">Custom URL</button>
+        <form id="shorten-form">
+            <input type="text" id="shorten-input" placeholder="a very long an un-moe URL">
+            <button type="submit" id="shorten-button">Shorten</button>
+        </form>
+
+        <div id="shorten-result">
+            <p id="shorten-link"><a id="shortened-url" target="_blank"></a></p>
+        </div>
+        <div class="footer">
+            <a href="https://pinapelz.moe">https://pinapelz.moe</a> | <a href="https://github.com/pinapelz/link-shortener-moekyun.me">source</a>
+        </div>
+    </div>
+
+    <div id="custom-popup" class="popup">
+        <div class="popup-content">
+            <h2>Custom URL</h2>
+            <p>moekyun.me/ <input type="text" id="custom-url-input" placeholder="my_oshi"> </p> 
+            <input type="text" id="custom-redirect-input" placeholder="Another very very very very long URL">
+            <input type="text" id="authentication-input" placeholder="Authentication Key">
+            <button type="button" id="cancel-button">Cancel</button>
+            <button type="button" id="save-button">Submit</button>
+        </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
