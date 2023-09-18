@@ -36,6 +36,9 @@ POSTGRES_PORT = 5432
 MOE_IMAGE = YOUR_IMAGE_URL  # This image is shown as the center icon on the page
 
 MOE_QUOTE = YOUR_QUOTE  # This message is shown center of the page
+
+SITE_URL = YOUR_SITE_URL  # This is the domain of your site, e.g. https://moekyun.me
+```
 ```
 5. Customize and redeploy the project!
 
