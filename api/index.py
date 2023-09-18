@@ -89,12 +89,12 @@ class PostgresHandler:
 
 
 def create_database_connection():
-    if os.environ.get("MK_DATABASE_HOSTNAME") is not None:
-        hostname = os.environ.get("MK_DATABASE_HOSTNAME")
-        user = os.environ.get("MK_DATABASE_USER")
-        password = os.environ.get("MK_DATABASE_PASSWORD")
-        port = int(os.environ.get("MK_DATABASE_PORT"))
-        database = os.environ.get("MK_DATABASE_NAME")
+    if os.environ.get("POSTGRES_USER") is not None:
+        hostname = os.environ.get("POSTGRES_HOST")
+        user = os.environ.get("POSTGRES_USER")
+        password = os.environ.get("POSTGRES_PASSWORD")
+        port = int(os.environ.get("POSTGRES_PORT"))
+        database = os.environ.get("POSTGRES_DATABASE")
     else:
         parser = configparser.ConfigParser()
         parser.read("config.ini")
