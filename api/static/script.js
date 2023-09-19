@@ -11,14 +11,13 @@ const shortenInput = document.getElementById('shorten-input');
 const shortenButton = document.getElementById('shorten-button');
 const shortenResult = document.getElementById('shorten-result');
 const shortenedUrl = document.getElementById('shortened-url');
-const presetDropdown = document.getElementById('preset-captcha-select');
-const customDropdown = document.getElementById('custom-captcha-select');
 
 
 shortenForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const url = shortenInput.value.trim();
+    const presetDropdown = document.getElementById('preset-captcha-select');
     const selectedCaptchaOption = presetDropdown.options[presetDropdown.selectedIndex];
 
     if (url !== '') {
@@ -63,6 +62,7 @@ saveButton.addEventListener('click', () => {
     const customUrl = customUrlInput.value;
     const authentication = customAuthenticationInput.value;
     const redirect = customRedirect.value;
+    const customDropdown = document.getElementById('custom-captcha-select');
     const selectedCaptchaOption = customDropdown.options[customDropdown.selectedIndex];
 
     console.log(customUrl);
