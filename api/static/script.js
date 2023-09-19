@@ -19,12 +19,13 @@ shortenForm.addEventListener('submit', (event) => {
     const url = shortenInput.value.trim();
     const presetDropdown = document.getElementById('preset-captcha-select');
     const selectedCaptchaOption = presetDropdown.options[presetDropdown.selectedIndex];
+    console.log(selectedCaptchaOption.value);
 
     if (url !== '') {
         const data = new URLSearchParams();
         data.append('url', url);
         data.append('captcha', selectedCaptchaOption.value);
-        console.log(selectedCaptchaOption.value);
+        
 
         fetch('/api/add_shortened', {
             method: 'POST',
