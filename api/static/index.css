@@ -14,6 +14,37 @@ body {
     background-size: 15%; 
 }
 
+.captcha-container-custom,
+.captcha-container-preset {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+.captcha-container-custom label,
+.captcha-container-preset label {
+    margin-bottom: 5px;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.captcha-container-custom select,
+.captcha-container-preset select {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.captcha-container-custom select:focus,
+.captcha-container-preset select:focus {
+    outline: none;
+    border-color: #FF69B4;
+}
 
 h2 {
     font-family: 'Quicksand', sans-serif;
