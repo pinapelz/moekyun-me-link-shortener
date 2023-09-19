@@ -13,6 +13,13 @@
         <h1>moekyun.me</h1>
         <h2>{{moe_quote}}</h2>
         <button type="button" id="custom-button">Custom URL</button>
+        <div class="captcha-container-preset">
+            <label for="preset-captcha-select">Special</label>
+            <select id="preset-captcha-select">
+              <option value="None">None</option>
+              <option value="VTuber">VTuber Captcha</option>
+            </select>
+          </div>
         <form id="shorten-form">
             <input type="text" id="shorten-input" placeholder="a very long an un-moe URL">
             <button type="submit" id="shorten-button">Shorten</button>
@@ -32,6 +39,13 @@
             <p>moekyun.me/ <input type="text" id="custom-url-input" placeholder="my_oshi"> </p> 
             <input type="text" id="custom-redirect-input" placeholder="Another very very very very long URL">
             <input type="text" id="authentication-input" placeholder="Authentication Key">
+            <div class="captcha-container-custom">
+                <label for="custom-captcha-select">Special</label>
+                <select id="custom-captcha-select">
+                  <option value="None">None</option>
+                  <option value="VTuber">VTuber Captcha</option>
+                </select>
+              </div>
             <button type="button" id="cancel-button">Cancel</button>
             <button type="button" id="save-button">Submit</button>
         </div>

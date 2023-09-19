@@ -116,7 +116,7 @@ def initialize_database():
     sql_handler = create_database_connection()
     sql_handler.create_table(
         "shortened_links",
-        "id SERIAL PRIMARY KEY, link VARCHAR(255), shortened_link VARCHAR(255) UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+        "id SERIAL PRIMARY KEY, link VARCHAR(255), shortened_link VARCHAR(255) UNIQUE, created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP, captcha VARCHAR(255)"
     )
     sql_handler.create_table(
         "authentication",
@@ -142,6 +142,10 @@ def main_page():
 def new_link():
     server = create_database_connection()
     requested_link = request.form.get("url")
+    captcha = request.form.get("captcha")
+    if captcha is None or captcha not in ["VTuber", "None"]:
+        print("Invalid captcha")
+        captcha = "None"
     if requested_link is None:
         print("No link provided")
         return abort(400, "No link provided")
@@ -156,7 +160,7 @@ def new_link():
             hash_value = generate_random_hash()
         else:
             break
-    server.insert_row("shortened_links", "link, shortened_link", (requested_link, hash_value))
+    server.insert_row("shortened_links", "link, shortened_link, captcha", (requested_link, hash_value, captcha))
     server.close_connection()
     return jsonify(SITE_URL+"/"+hash_value)
 
@@ -164,6 +168,7 @@ def new_link():
 def add_custom():
     server = create_database_connection()
     requested_link = request.form.get("url")
+    captcha = request.form.get("captcha")
     custom_link = request.form.get("custom")
     password = request.headers.get('X-AUTHENTICATION')
     if password is None:
@@ -186,7 +191,9 @@ def add_custom():
     if server.check_row_exists("shortened_links", "shortened_link", custom_link):
         server.close_connection()
         return abort(400, "Custom link already exists")
-    server.insert_row("shortened_links", "link, shortened_link", (requested_link, custom_link))
+    if captcha is None or captcha not in ["VTuber", "None"]:
+        captcha = "None"
+    server.insert_row("shortened_links", "link, shortened_link, captcha", (requested_link, custom_link, captcha))
     server.close_connection()
     return jsonify(SITE_URL+"/"+custom_link)
 
@@ -196,12 +203,19 @@ def expand_url(path):
     if server.check_row_exists("shortened_links", "shortened_link", path):
         print("Link found")
         link = server.get_rows("shortened_links", "shortened_link", path)[0][1]
-        print(link)
+        captcha = server.get_rows("shortened_links", "shortened_link", path)[0][4]
+        print("Captcha:", captcha)
         server.close_connection()
-        return redirect(link)
+        if captcha == "VTuber":
+            return render_template("auth.html", redirect_url=link)
+        else:
+            return redirect(link)
     server.close_connection()
     return abort(404, "Link not found")
 
+@app.route("/create/new_auth")
+def new_auth():
+    return render_template("auth.html")
 
 if __name__ == '__main__':
     app.run(debug=True)
