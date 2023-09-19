@@ -3,6 +3,8 @@ This is a Vercel adapted version of the [moekyun.me](https://moekyun.me) link sh
 
 An alternative version that uses MySQL and that can be deployed using WSGI can be found [here](https://github.com/pinapelz/link-shortener-moekyun.me)
 
+<img src="https://files.catbox.moe/8lgla6.png"/>
+
 ## Deploy on Vercel
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
 
