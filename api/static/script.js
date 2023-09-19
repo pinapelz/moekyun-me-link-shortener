@@ -12,19 +12,29 @@ const shortenButton = document.getElementById('shorten-button');
 const shortenResult = document.getElementById('shorten-result');
 const shortenedUrl = document.getElementById('shortened-url');
 
+const presetDropdown = document.getElementById('preset-captcha-select');
+const customDropdown = document.getElementById('custom-captcha-select');
+
+let presetValue = "None";
+let customValue = "None";
+
+presetDropdown.addEventListener('change', (event) => {
+    presetValue = event.target.value;
+});
+
+customDropdown.addEventListener('change', (event) => {
+    customValue = event.target.value;
+});
 
 shortenForm.addEventListener('submit', (event) => {
     event.preventDefault();
 
     const url = shortenInput.value.trim();
-    const presetDropdown = document.getElementById('preset-captcha-select');
-    const selectedCaptchaOption = presetDropdown.options[presetDropdown.selectedIndex];
-    console.log(selectedCaptchaOption.value);
 
     if (url !== '') {
         const data = new URLSearchParams();
         data.append('url', url);
-        data.append('captcha', selectedCaptchaOption.value);
+        data.append('captcha', presetValue);
         
 
         fetch('/api/add_shortened', {
@@ -63,8 +73,6 @@ saveButton.addEventListener('click', () => {
     const customUrl = customUrlInput.value;
     const authentication = customAuthenticationInput.value;
     const redirect = customRedirect.value;
-    const customDropdown = document.getElementById('custom-captcha-select');
-    const selectedCaptchaOption = customDropdown.options[customDropdown.selectedIndex];
 
     console.log(customUrl);
     console.log(authentication);
@@ -72,7 +80,7 @@ saveButton.addEventListener('click', () => {
     const data = new URLSearchParams();
     data.append('url', redirect);
     data.append('custom', customUrl);
-    data.append('captcha', selectedCaptchaOption.value);
+    data.append('captcha', customValue);
     
     fetch('/api/add_custom', {
       method: 'POST',
