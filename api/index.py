@@ -14,15 +14,15 @@ CORS(app)
 # Corner Graphics
 corner_graphics = [
     "https://files.catbox.moe/zciyt2.png",
-    "https://files.catbox.moe/a3m1d6.png",
     "https://files.catbox.moe/zawgke.webp",
     "https://files.catbox.moe/2aioik.webp"
 ]
 
 # Site Configurations
 SITE_URL = "https://moekyun.me"
-MOE_IMAGE = "https://files.catbox.moe/jtskfs.png"
+MOE_IMAGE = "https://files.catbox.moe/bqtys4.webp"
 MOE_QUOTE = "Have a moe day today!"
+CUSTOM_URL_REQUIRE_AUTH = True
 
 class PostgresHandler:
     def __init__(self, username: str, password: str, host_name: str, port: int, database: str):
@@ -171,9 +171,9 @@ def add_custom():
     captcha = request.form.get("captcha")
     custom_link = request.form.get("custom")
     password = request.headers.get('X-AUTHENTICATION')
-    if password is None:
+    if password is None and CUSTOM_URL_REQUIRE_AUTH:
         return abort(401, "Invalid Authentication")
-    if not server.check_row_exists("authentication", "authkey", password):
+    if not server.check_row_exists("authentication", "authkey", password) and CUSTOM_URL_REQUIRE_AUTH:
         server.close_connection()
         return abort(401, "Invalid Authentication")
 
