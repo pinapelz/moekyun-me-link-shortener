@@ -122,7 +122,7 @@ def initialize_database():
         "authentication",
         "id SERIAL PRIMARY KEY, authkey VARCHAR(255) UNIQUE"
     )
-initialize_database()
+    sql_handler.close_connection()
 
 
 def generate_random_hash(length=6):
@@ -133,6 +133,8 @@ def generate_random_hash(length=6):
 @app.route('/')
 def main_page():
     bottom_graphic = random.choice(corner_graphics)
+    if os.environ.get("CHECK_SETUP_EACH_VISIT") == "True":
+        initialize_database()
     return render_template('index.html',
                            moe_image_url=MOE_IMAGE,
                            moe_quote=MOE_QUOTE,
