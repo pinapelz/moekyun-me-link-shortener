@@ -11,12 +11,6 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-# Corner Graphics
-corner_graphics = [
-    "https://files.catbox.moe/zciyt2.png",
-    "https://files.catbox.moe/zawgke.webp",
-    "https://files.catbox.moe/2aioik.webp"
-]
 
 # Site Configurations
 SITE_URL = "http://127.0.0.1:5000"
@@ -54,7 +48,10 @@ if MOE_IMAGE is None:
 
 MOE_QUOTE = os.environ.get("MOE_QUOTE")
 if MOE_QUOTE is None:
-    MOE_QUOTE = CONFIG.get("config", "moe_quote")
+    try:
+        MOE_QUOTE = CONFIG.get("config", "moe_quote")
+    except:
+        MOE_QUOTE = "Have a moe day today!"
 
 SITE_URL = os.environ.get("SITE_URL")
 if SITE_URL is None:
@@ -69,7 +66,11 @@ if corner_graphics is None:
         corner_graphics = CONFIG.get("config", "corner_graphics")
         corner = corner_graphics.split(",")
     except:
-        corner_graphics = corner_graphics
+        corner_graphics = [
+            "https://files.catbox.moe/zciyt2.png",
+            "https://files.catbox.moe/zawgke.webp",
+            "https://files.catbox.moe/2aioik.webp"
+        ]
 else:
     corner_graphics = corner_graphics.split(",")
 
@@ -254,6 +255,7 @@ def generate_random_hash(length=6):
 
 @app.route('/')
 def main_page():
+    print(corner_graphics)
     bottom_graphic = random.choice(corner_graphics)
     if os.environ.get("CHECK_SETUP_EACH_VISIT") == "True":
         pass
