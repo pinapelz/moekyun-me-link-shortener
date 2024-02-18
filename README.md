@@ -1,7 +1,5 @@
 # moekyun.me (Vercel) 
-This is a Vercel adapted version of the [moekyun.me](https://moekyun.me) link shortener. This version uses Vercel's serverless functions + Flask and Vercel's PostgreSQL database to store the links.
-
-An alternative version that uses MySQL and that can be deployed using WSGI can be found [here](https://github.com/pinapelz/link-shortener-moekyun.me)
+This is a Vercel adapted version of the [moekyun.me](https://moekyun.me) link shortener. This version uses Vercel's serverless functions + Flask and Vercel's PostgreSQL or Redis database to store the links.
 
 <img src="https://files.catbox.moe/8lgla6.png"/>
 
@@ -20,28 +18,42 @@ Deploy the project, you may see an error page, but that's fine
 
 3. Connect Store and create a new PostgreSQL database (or an existing one)
 
-4. Let Vercel create the environment variables for you. Ensure they all start with `POSTGRES`
+Here you must decide between whether you'd like to use Redis or Postgres as your backend storage
+
+4a. For Postgres create the following environment variables
 ```
-POSTGRES_URL
-POSTGRES_URL_NON_POOLING
-POSTGRES_PRISMA_URL
-POSTGRES_USER
-POSTGRES_HOST
-POSTGRES_PASSWORD
-POSTGRES_DATABASE
+POSTGRES_HOST (ex. somedomain.postgres.vercel-storage.com)
+POSTGRES_USER (ex. default)
+POSTGRES_PASSWORD (ex. mypassword123)
+POSTGRES_PORT (ex. 5432)
+POSTGRES_DATABASE (ex. verceldb)
+```
+
+4b. For Redis create the following environment variables
+```
+KV_URL (ex. someredis.upstash.io)
+KV_USER (ex. default)
+KV_PASSWORD (ex. 123456)
+KV_PORT = 41891
 ```
 
 **Additionally you must add the following variables manually:**
-```
-POSTGRES_PORT = 5432
 
+```
+STORAGE_MODE (redis or psql)
+CUSTOM_URL_REQUIRE_AUTH (set this to True if yes, do not create this is you don't want auth)
+```
+
+5. Add Additional variables, these are optional
+```
 MOE_IMAGE = YOUR_IMAGE_URL  # This image is shown as the center icon on the page
 
 MOE_QUOTE = YOUR_QUOTE  # This message is shown center of the page
 
 SITE_URL = YOUR_SITE_URL  # This is the domain of your site, e.g. https://moekyun.me
+
+CORNER_GRAPHICS = [image1.png, image2.png, image3.png]
 ```
-```
-5. Customize and redeploy the project!
+
 
 *Inspired by https://catbox.moe*
