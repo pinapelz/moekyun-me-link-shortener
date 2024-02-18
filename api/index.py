@@ -38,13 +38,19 @@ if  STORAGE_MODE not in ["postgres", "redis"]:
 
 CUSTOM_URL_REQUIRE_AUTH = os.environ.get("CUSTOM_URL_REQUIRE_AUTH")
 if CUSTOM_URL_REQUIRE_AUTH is None:
-    CUSTOM_URL_REQUIRE_AUTH = CONFIG.get("config", "custom_url_require_auth")
+    try:
+        CUSTOM_URL_REQUIRE_AUTH = CONFIG.get("config", "custom_url_require_auth")
+    except:
+        CUSTOM_URL_REQUIRE_AUTH = False
 else:
     CUSTOM_URL_REQUIRE_AUTH = os.environ.get("CUSTOM_URL_REQUIRE_AUTH")
 
 MOE_IMAGE = os.environ.get("MOE_IMAGE")
 if MOE_IMAGE is None:
-    MOE_IMAGE = CONFIG.get("config", "moe_image")
+    try:
+        MOE_IMAGE = CONFIG.get("config", "moe_image")
+    except:
+        MOE_IMAGE = "https://files.catbox.moe/bqtys4.webp"
 
 MOE_QUOTE = os.environ.get("MOE_QUOTE")
 if MOE_QUOTE is None:
@@ -52,12 +58,18 @@ if MOE_QUOTE is None:
 
 SITE_URL = os.environ.get("SITE_URL")
 if SITE_URL is None:
-    SITE_URL = CONFIG.get("config", "site_url")
+    try:
+        SITE_URL = CONFIG.get("config", "site_url")
+    except:
+        SITE_URL = "http://moekyun.me"
 
 corner_graphics = os.environ.get("CORNER_GRAPHICS")
 if corner_graphics is None:
-    corner_graphics = CONFIG.get("config", "corner_graphics")
-    corner = corner_graphics.split(",")
+    try:
+        corner_graphics = CONFIG.get("config", "corner_graphics")
+        corner = corner_graphics.split(",")
+    except:
+        corner_graphics = corner_graphics
 else:
     corner_graphics = corner_graphics.split(",")
 
