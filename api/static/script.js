@@ -34,7 +34,7 @@ shortenForm.addEventListener('submit', (event) => {
     if (url !== '') {
         const data = new URLSearchParams();
         data.append('url', url);
-        data.append('captcha', presetValue);
+        data.append('special', presetValue);
         
 
         fetch('/api/add_shortened', {
