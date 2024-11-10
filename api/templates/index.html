@@ -54,23 +54,26 @@
             <div class="popup-content">
                 <h2>Custom URL</h2>
                 <p>
-                    moekyun.me/
+                    {{siteURL}}/
                     <input
                         type="text"
                         id="custom-url-input"
                         placeholder="my_oshi"
                     />
                 </p>
+                <p>URL</p>
                 <input
                     type="text"
                     id="custom-redirect-input"
                     placeholder="Another very very very very long URL"
                 />
+                {% if requireCustomAuth %}
                 <input
                     type="text"
                     id="authentication-input"
                     placeholder="Authentication Key"
                 />
+                {% endif %}
                 <div class="captcha-container-custom">
                     <label for="custom-captcha-select">Special</label>
                     <select id="custom-captcha-select">

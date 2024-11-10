@@ -177,7 +177,9 @@ def main_page():
     return render_template('index.html',
                            moe_image_url=MOE_IMAGE,
                            moe_quote=MOE_QUOTE,
-                           graphic=bottom_graphic)
+                           graphic=bottom_graphic, requireCustomAuth=CUSTOM_URL_REQUIRE_AUTH,
+                           siteURL=SITE_URL
+    )
 
 def create_new_shortened_link(requested_link: str,  special: str):
     server = create_postgres_connection()
