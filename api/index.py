@@ -165,7 +165,7 @@ class RedisHandler:
                                        password=password,
                                        port=port,
                                        decode_responses=decode_responses,
-                                       ssl=True,   
+                                       ssl=True,
                                        )
         print("[RedisHandler] Handler Initialized")
 
@@ -173,10 +173,10 @@ class RedisHandler:
         url_data = {"url": val, "special": special}
         print(url_data)
         self._connection.hset(key, mapping=url_data)
-    
+
     def read_kv_url(self, key: str) -> str:
         return self._connection.hgetall(key)
-    
+
 
     def read_kv(self, key: str) -> str:
         return self._connection.get(key)
@@ -334,7 +334,7 @@ def add_custom_url(requested_link: str, special: str, custom_link: str):
     return jsonify(SITE_URL+"/"+custom_link)
 
 
-def add_custom_url(requested_link: str,
+def add_custom_url_pw(requested_link: str,
                    special: str,
                    custom_link: str,
                    password: str):
@@ -383,7 +383,10 @@ def add_custom():
     special = request.form.get("special")
     custom_link = request.form.get("custom")
     password = request.headers.get('X-AUTHENTICATION')
-    return add_custom_url(requested_link, special, custom_link, password)
+    if os.environ.get("REQUIRE_AUTH") == "True":
+        return add_custom_url_pw(requested_link, special, custom_link, password)
+    else:
+        return add_custom_url(requested_link, special, custom_link)
 
 
 def fetch_url(path: str):
