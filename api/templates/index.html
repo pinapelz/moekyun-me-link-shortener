@@ -67,13 +67,12 @@
                     id="custom-redirect-input"
                     placeholder="Another very very very very long URL"
                 />
-                {% if requireCustomAuth %}
                 <input
                     type="text"
                     id="authentication-input"
                     placeholder="Authentication Key"
+                    {% if not requireCustomAuth %}style="display:none;"{% endif %}
                 />
-                {% endif %}
                 <div class="captcha-container-custom">
                     <label for="custom-captcha-select">Special</label>
                     <select id="custom-captcha-select">

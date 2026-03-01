@@ -18,13 +18,17 @@ const customDropdown = document.getElementById('custom-captcha-select');
 let presetValue = "None";
 let customValue = "None";
 
-presetDropdown.addEventListener('change', (event) => {
-    presetValue = event.target.value;
-});
+if (presetDropdown) {
+    presetDropdown.addEventListener('change', (event) => {
+        presetValue = event.target.value;
+    });
+}
 
-customDropdown.addEventListener('change', (event) => {
-    customValue = event.target.value;
-});
+if (customDropdown) {
+    customDropdown.addEventListener('change', (event) => {
+        customValue = event.target.value;
+    });
+}
 
 shortenForm.addEventListener('submit', (event) => {
     event.preventDefault();
@@ -70,9 +74,9 @@ cancelButton.addEventListener('click', () => {
 
 
 saveButton.addEventListener('click', () => {
-    const customUrl = customUrlInput.value;
-    const authentication = customAuthenticationInput.value;
-    const redirect = customRedirect.value;
+    const customUrl = customUrlInput ? customUrlInput.value : '';
+    const authentication = customAuthenticationInput ? customAuthenticationInput.value : '';
+    const redirect = customRedirect ? customRedirect.value : '';
 
     console.log(customUrl);
     console.log(authentication);
