@@ -42,25 +42,38 @@ shortenForm.addEventListener('submit', (event) => {
         
 
         fetch('/api/add_shortened', {
-            method: 'POST',
-            body: data,
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
-            const shortened = data; 
-            shortenedUrl.href = shortened;
-            shortenedUrl.textContent = shortened;
-            shortenResult.style.display = 'block';
-            container.classList.add('show-result');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
-        shortenInput.value = '';
+                method: 'POST',
+                body: data,
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            })
+            .then(async (response) => {
+                const body = await response.json().catch(() => null);
+                if (response.ok) {
+                    console.log('Success:', body);
+                    const shortened = body;
+                    shortenedUrl.href = shortened;
+                    shortenedUrl.textContent = shortened;
+                    shortenResult.style.display = 'block';
+                    container.classList.add('show-result');
+                } else {
+                    console.error('API Error:', body);
+                    const message = (body && body.error) ? body.error : 'An error occurred while shortening';
+                    shortenedUrl.href = '#';
+                    shortenedUrl.textContent = message;
+                    shortenResult.style.display = 'block';
+                    container.classList.add('show-result');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                shortenedUrl.href = '#';
+                shortenedUrl.textContent = 'Network error';
+                shortenResult.style.display = 'block';
+                container.classList.add('show-result');
+            });
+            shortenInput.value = '';
     }
 });
 
@@ -94,16 +107,26 @@ saveButton.addEventListener('click', () => {
       },
       body: data
     })
-    .then(response => response.json())
-    .then(data => {
-      console.log('Success:', data);
-      const shortened = data; 
-      shortenedUrl.href = shortened;
-      shortenedUrl.textContent = shortened;
-      shortenResult.style.display = 'block';
-      container.classList.add('show-result');
+    .then(async (response) => {
+      const body = await response.json().catch(() => null);
+      if (response.ok) {
+        console.log('Success:', body);
+        const shortened = body; 
+        shortenedUrl.href = shortened;
+        shortenedUrl.textContent = shortened;
+        shortenResult.style.display = 'block';
+        container.classList.add('show-result');
+      } else {
+        console.error('API Error:', body);
+        const message = (body && body.error) ? body.error : 'An error occurred while creating custom link';
+        shortenedUrl.href = '#';
+        shortenedUrl.textContent = message;
+        shortenResult.style.display = 'block';
+        container.classList.add('show-result');
+      }
     })
     .catch(error => {
+      console.error('Error:', error);
       shortenedUrl.href = "https://i.pinimg.com/1200x/df/2d/a3/df2da37278e0270d873015fb5613e57a.jpg";
       shortenedUrl.textContent = "You do not have the power of god and anime on your side! (An error occured)";
       shortenResult.style.display = 'block';

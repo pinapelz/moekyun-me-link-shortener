@@ -183,8 +183,6 @@ def main_page():
 
 def create_new_shortened_link(requested_link: str,  special: str):
     server = create_postgres_connection()
-    if requested_link is None:
-        return abort(400, "No link provided")
     if requested_link.strip() == "":
         return abort(400, "Cannot shorten empty link")
     if not requested_link.startswith("http://") \
@@ -231,14 +229,12 @@ def add_custom_url(requested_link: str,
     if not requested_link.startswith("http://") \
             and not requested_link.startswith("https://"):
         requested_link = "https://" + requested_link
-    if custom_link is None:
-        return abort(400, "No custom link provided")
     if custom_link.strip() == "":
         return abort(400, "Cannot shorten empty link")
     if server.check_row_exists("shortened_links", "shortened_link",
                                  custom_link):
           server.close_connection()
-          return abort(400, "Custom link already exists")
+          return jsonify({"error": "this custom link already exists"}), 400
     if special is None or special not in ["VTuber", "None"]:
         special = "None"
     server.insert_row("shortened_links", "link, shortened_link, special",
